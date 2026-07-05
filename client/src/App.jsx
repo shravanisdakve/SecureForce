@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import FloatingButtons from './components/FloatingButtons'
 import MobileCallBar from './components/MobileCallBar'
+import BackToTop from './components/BackToTop'
 import Home from './pages/Home'
 import Services from './pages/Services'
 import About from './pages/About'
@@ -25,6 +26,7 @@ export default function App() {
       <Footer />
       <FloatingButtons />
       <MobileCallBar />
+      <BackToTop />
     </div>
   )
 }
