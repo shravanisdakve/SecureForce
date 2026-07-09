@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import FloatingButtons from './components/FloatingButtons'
 import MobileCallBar from './components/MobileCallBar'
 import BackToTop from './components/BackToTop'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Services from './pages/Services'
 import About from './pages/About'
@@ -13,6 +14,7 @@ import NotFound from './pages/NotFound'
 export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-night pb-16 text-white md:pb-0">
+      <ScrollToTop />
       <Navbar />
       <main className="flex-1">
         <Routes>
