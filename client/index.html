@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Professional security guards, bouncers, fire safety personnel, and housekeeping staff in Mumbai. Call now for a free quote." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SecureForce Security Services — Mumbai" />
+    <meta property="og:description" content="Trusted security guards, bouncers, fire safety personnel, and housekeeping staff in Mumbai. 24/7 deployment, background-verified staff. Call +91 90823 87406." />
+    <meta property="og:image" content="/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="SecureForce Security Services — Mumbai" />
+    <meta name="twitter:description" content="Trusted security guards, bouncers, fire safety personnel, and housekeeping staff in Mumbai. Call +91 90823 87406." />
+    <meta name="twitter:image" content="/logo.png" />
+    <script>
+      ;(function () {
+        var origin = window.location.origin
+        var imgs = document.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]')
+        imgs.forEach(function (m) {
+          if (m.content && m.content.indexOf('http') !== 0) {
+            m.content = origin + m.content
+          }
+        })
+        var url = document.querySelector('meta[property="og:url"]')
+        if (!url) {
+          url = document.createElement('meta')
+          url.setAttribute('property', 'og:url')
+          document.head.appendChild(url)
+        }
+        url.content = window.location.href
+      })()
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+    <title>SecureForce Security Services</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
