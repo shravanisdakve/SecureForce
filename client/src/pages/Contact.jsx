@@ -1,6 +1,7 @@
 import { Phone, MessageCircle, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react'
 import { SITE, telLink, whatsappLink } from '../config'
 import LeadForm from '../components/LeadForm'
+import Faq from '../components/Faq'
 
 export default function Contact() {
   const cards = [
@@ -87,6 +88,8 @@ export default function Contact() {
         </div>
         <LeadForm />
       </div>
+
+      <Faq />
     </div>
   )
 }
