@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #facc15;
+  --color-brand-dark: #eab308;
+  --color-night: #0a0a0a;
+  --color-night-800: #141414;
+  --color-night-700: #1d1d1d;
+  --color-night-600: #262626;
+  --color-night-400: #525252;
+  --color-night-200: #a3a3a3;
+  --color-night-100: #d4d4d4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
