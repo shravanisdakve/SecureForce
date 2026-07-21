@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { ShieldCheck, Medal, Award, Users, ArrowRight, CheckCircle2 } from 'lucide-react'
 import { SITE } from '../config'
+import usePageTitle from '../hooks/usePageTitle'
 import aboutImg from '../assets/about.png'
 
 export default function About() {
+  usePageTitle('About Us')
   return (
     <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="max-w-2xl">

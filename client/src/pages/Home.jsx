@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Phone, ShieldCheck, Clock, Users, Award, ArrowRight, Quote } from 'lucide-react'
 import { SITE, SERVICES, TRUST_BADGES, TESTIMONIALS, telLink } from '../config'
+import usePageTitle from '../hooks/usePageTitle'
 import LeadForm from '../components/LeadForm'
 import EstimateCalculator from '../components/EstimateCalculator'
 import heroImg from '../assets/hero.jpg'
 import bookingImg from '../assets/booking-form.png'
 
 export default function Home() {
+  usePageTitle('Security Guards & Bouncers in Mumbai')
   return (
     <div>
       <Hero />

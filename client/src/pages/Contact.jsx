@@ -1,9 +1,11 @@
 import { Phone, MessageCircle, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react'
 import { SITE, telLink, whatsappLink } from '../config'
+import usePageTitle from '../hooks/usePageTitle'
 import LeadForm from '../components/LeadForm'
 import Faq from '../components/Faq'
 
 export default function Contact() {
+  usePageTitle('Contact & Book a Service')
   const cards = [
     {
       icon: Phone,

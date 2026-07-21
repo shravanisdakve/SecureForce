@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { ShieldOff, Home } from 'lucide-react'
+import usePageTitle from '../hooks/usePageTitle'
 
 export default function NotFound() {
+  usePageTitle('Page Not Found')
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <ShieldOff size={72} className="text-brand" strokeWidth={1.3} />
