@@ -57,6 +57,18 @@ export default function EstimateCalculator() {
               {guards} × {service.title.toLowerCase()} · {hours} hrs
               {days > 1 ? ` · ${days} days` : ' · single event'}
             </p>
+            <div className="mt-4 space-y-1.5 border-t border-brand/20 pt-4 text-sm text-night-200">
+              <div className="flex items-center justify-between">
+                <span>{fmt(service.rate)}/hr × {guards} personnel × {hours} hrs</span>
+                <span className="font-bold text-white">{fmt(guards * hours * service.rate)}</span>
+              </div>
+              {days > 1 && (
+                <div className="flex items-center justify-between">
+                  <span>Deployed for {days} days</span>
+                  <span className="font-bold text-white">{fmt(total)}</span>
+                </div>
+              )}
+            </div>
             {days > 1 && (
               <p className="mt-2 text-sm text-night-200">
                 ≈ {fmt(perMonth)} per month if deployed continuously
