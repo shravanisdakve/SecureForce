@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, ShieldCheck, Clock, Users, Award, ArrowRight, Quote } from 'lucide-react'
-import { SITE, SERVICES, TRUST_BADGES, TESTIMONIALS, telLink } from '../config'
+import { useSite } from '../siteContext'
 import usePageTitle from '../hooks/usePageTitle'
 import LeadForm from '../components/LeadForm'
 import EstimateCalculator from '../components/EstimateCalculator'
@@ -27,6 +27,7 @@ export default function Home() {
 }
 
 function Hero() {
+  const { site: SITE, telLink } = useSite()
   return (
     <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(250,204,21,0.12),transparent_55%)]" />
@@ -90,11 +91,18 @@ function Hero() {
 }
 
 function TrustStrip() {
+  const { site: SITE } = useSite()
   const icons = [Award, Users, Clock, ShieldCheck]
+  const badges = [
+    { value: `${SITE.yearsExperience}+`, label: 'Years Experience' },
+    { value: `${SITE.clientsCount}+`, label: 'Happy Clients' },
+    { value: `${SITE.guardsCount}+`, label: 'Trained Guards' },
+    { value: SITE.hours, label: 'Support' },
+  ]
   return (
     <section className="border-y border-white/10 bg-night-800">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-10 sm:px-6 md:grid-cols-4">
-        {TRUST_BADGES.map((b, i) => {
+        {badges.map((b, i) => {
           const Icon = icons[i]
           return (
             <div key={b.label} className="flex items-center gap-3">
@@ -112,6 +120,7 @@ function TrustStrip() {
 }
 
 function ServicesPreview() {
+  const { services: SERVICES } = useSite()
   return (
     <section id="services" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <div className="max-w-2xl">
@@ -153,6 +162,7 @@ function ServicesPreview() {
 }
 
 function WhyUs() {
+  const { site: SITE } = useSite()
   const points = [
     {
       icon: ShieldCheck,
@@ -203,6 +213,7 @@ function WhyUs() {
 }
 
 function Testimonials() {
+  const { testimonials: TESTIMONIALS } = useSite()
   return (
     <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <h2 className="text-3xl font-black text-white sm:text-4xl">What Clients Say</h2>
@@ -227,6 +238,7 @@ function Testimonials() {
 }
 
 function QuoteSection() {
+  const { site: SITE } = useSite()
   return (
     <section className="border-t border-white/10 bg-gradient-to-b from-night to-night-800">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CheckCircle2, Send, Loader2 } from 'lucide-react'
-import { SERVICES, whatsappLink } from '../config'
+import { useSite } from '../siteContext'
 
 const emptyForm = {
   name: '',
@@ -14,6 +14,7 @@ const emptyForm = {
 export default function LeadForm({ compact = false }) {
   const [form, setForm] = useState(emptyForm)
   const [status, setStatus] = useState('idle')
+  const { services: SERVICES, whatsappLink } = useSite()
 
   function update(key, value) {
     setForm((f) => ({ ...f, [key]: value }))

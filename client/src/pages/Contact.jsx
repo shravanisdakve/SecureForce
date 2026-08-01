@@ -1,5 +1,5 @@
 import { Phone, MessageCircle, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react'
-import { SITE, telLink, whatsappLink } from '../config'
+import { useSite } from '../siteContext'
 import usePageTitle from '../hooks/usePageTitle'
 import LeadForm from '../components/LeadForm'
 import Faq from '../components/Faq'
@@ -7,6 +7,7 @@ import TiltCard from '../components/TiltCard'
 
 export default function Contact() {
   usePageTitle('Contact & Book a Service')
+  const { site: SITE, telLink, whatsappLink } = useSite()
   const cards = [
     {
       icon: Phone,

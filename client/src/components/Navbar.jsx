@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Menu, X, Phone } from 'lucide-react'
-import { SITE, telLink } from '../config'
+import { useSite } from '../siteContext'
 import logo from '../assets/logo.png'
 
 const links = [
@@ -13,6 +13,7 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const { site: SITE, telLink } = useSite()
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-night/80 backdrop-blur-md">

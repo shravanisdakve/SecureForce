@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Calculator, ArrowRight } from 'lucide-react'
-import { SERVICES } from '../config'
+import { useSite } from '../siteContext'
 
 const SHIFTS = [
   { value: 4, label: '4 hrs (event)' },
@@ -17,6 +17,7 @@ const DAYS = [
 ]
 
 export default function EstimateCalculator() {
+  const { services: SERVICES } = useSite()
   const [serviceId, setServiceId] = useState(SERVICES[1].id)
   const [guards, setGuards] = useState(4)
   const [hours, setHours] = useState(8)
@@ -24,7 +25,7 @@ export default function EstimateCalculator() {
 
   const service = useMemo(
     () => SERVICES.find((s) => s.id === serviceId) || SERVICES[1],
-    [serviceId],
+    [serviceId, SERVICES],
   )
 
   const total = guards * hours * days * service.rate

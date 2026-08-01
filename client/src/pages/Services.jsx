@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Check } from 'lucide-react'
-import { SERVICES } from '../config'
+import { useSite } from '../siteContext'
 import usePageTitle from '../hooks/usePageTitle'
 import TiltCard from '../components/TiltCard'
 
 export default function Services() {
   usePageTitle('Our Services')
+  const { services: SERVICES } = useSite()
   return (
     <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="max-w-2xl">

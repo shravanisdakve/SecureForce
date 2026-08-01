@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { Phone, MessageCircle, FileText } from 'lucide-react'
-import { telLink, whatsappLink } from '../config'
+import { useSite } from '../siteContext'
 
 export default function MobileCallBar() {
+  const { telLink, whatsappLink } = useSite()
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-white/10 bg-night-800/95 backdrop-blur-md md:hidden">
       <a

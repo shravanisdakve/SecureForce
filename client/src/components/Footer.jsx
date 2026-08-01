@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { Phone, Mail, MapPin } from 'lucide-react'
-import { SITE } from '../config'
+import { useSite } from '../siteContext'
 import logo from '../assets/logo.png'
 
 export default function Footer() {
+  const { site: SITE } = useSite()
   return (
     <footer className="border-t border-white/10 bg-night">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">

@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
-import { SITE } from '../config'
+import { useSite } from '../siteContext'
 
 export default function usePageTitle(title) {
+  const { site } = useSite()
+
   useEffect(() => {
-    document.title = title ? `${title} — ${SITE.name}` : SITE.name
-  }, [title])
+    document.title = title ? `${title} — ${site.name}` : site.name
+  }, [title, site.name])
 }

@@ -1,7 +1,8 @@
 import { Phone, MessageCircle } from 'lucide-react'
-import { telLink, whatsappLink } from '../config'
+import { useSite } from '../siteContext'
 
 export default function FloatingButtons() {
+  const { telLink, whatsappLink } = useSite()
   return (
     <div className="fixed bottom-5 left-5 z-50 hidden flex-col gap-3 md:flex">
       <a
