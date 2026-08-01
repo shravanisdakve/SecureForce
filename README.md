@@ -165,6 +165,6 @@ The script builds the client, builds the container image, and deploys it to Clou
 
 ## Support
 
-- **Phone / WhatsApp:** [+91 91234 56789](tel:+919123456789)
-- **Email:** [secureforce.contact@gmail.com](mailto:secureforce.contact@gmail.com)
+- **Phone / WhatsApp:** [+91 90823 87406](tel:+919082387406)
+- **Email:** [shravanisdakve@gmail.com](mailto:shravanisdakve@gmail.com)
 - **Hours:** 24/7 helpline
