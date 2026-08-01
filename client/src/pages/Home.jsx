@@ -123,20 +123,28 @@ function ServicesPreview() {
       </div>
       <div className="mt-12 grid gap-6 sm:grid-cols-2">
         {SERVICES.map((s) => (
-          <TiltCard key={s.id}>
-            <Link
-              to="/services"
-              className="group block h-full rounded-2xl border border-white/10 bg-night-800 p-7 transition hover:-translate-y-1 hover:border-brand/50 hover:bg-night-700"
-            >
+          <TiltCard key={s.id} className="h-full">
+            <div className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-night-800 p-7 transition hover:-translate-y-1 hover:border-brand/50 hover:bg-night-700">
               <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-2xl">
                 {s.icon}
               </span>
-              <h3 className="mt-5 text-xl font-bold text-white group-hover:text-brand">{s.title}</h3>
+              <h3 className="mt-5 text-xl font-bold text-white group-hover:text-brand">
+                <Link
+                  to="/services"
+                  aria-label={`${s.title} — see all services`}
+                  className="after:absolute after:inset-0 after:content-['']"
+                >
+                  {s.title}
+                </Link>
+              </h3>
               <p className="mt-3 text-sm leading-relaxed text-night-100">{s.description}</p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-brand">
+              <Link
+                to="/contact"
+                className="relative z-10 mt-5 inline-flex items-center gap-1.5 self-start rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-night transition hover:bg-brand-dark"
+              >
                 Request This Service <ArrowRight size={16} className="transition group-hover:translate-x-1" />
-              </span>
-            </Link>
+              </Link>
+            </div>
           </TiltCard>
         ))}
       </div>
