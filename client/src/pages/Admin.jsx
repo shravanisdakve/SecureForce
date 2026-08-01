@@ -339,7 +339,18 @@ function ClientsTab() {
         <Field label="Email" value={value.email} type="email" onChange={(v) => setField(setter, 'email', v)} />
         <Field label="Location" value={value.location} onChange={(v) => setField(setter, 'location', v)} />
         <Field label="Service" value={value.service} onChange={(v) => setField(setter, 'service', v)} />
-        <Field label="Status" value={value.status} onChange={(v) => setField(setter, 'status', v)} className="sm:col-span-2" />
+        <label className="block sm:col-span-2">
+          <span className="mb-1 block text-xs font-semibold uppercase tracking-wider text-night-200">Status</span>
+          <select
+            className={inputCls}
+            value={value.status}
+            onChange={(e) => setField(setter, 'status', e.target.value)}
+          >
+            {['active', 'inactive', 'closed'].map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </label>
         <Field label="Notes" value={value.notes} textarea onChange={(v) => setField(setter, 'notes', v)} className="sm:col-span-2" />
       </div>
     )
