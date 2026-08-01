@@ -21,7 +21,7 @@ export default function Navbar() {
           <img
             src={logo}
             alt={`${SITE.shortName} logo`}
-            className="h-10 w-10 rounded-lg object-contain"
+            className="h-9 w-auto rounded-md object-contain"
           />
           <span className="text-lg font-bold tracking-tight text-white">
             {SITE.shortName}
