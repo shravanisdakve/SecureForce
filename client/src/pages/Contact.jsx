@@ -3,6 +3,7 @@ import { SITE, telLink, whatsappLink } from '../config'
 import usePageTitle from '../hooks/usePageTitle'
 import LeadForm from '../components/LeadForm'
 import Faq from '../components/Faq'
+import TiltCard from '../components/TiltCard'
 
 export default function Contact() {
   usePageTitle('Contact & Book a Service')
@@ -46,23 +47,24 @@ export default function Contact() {
 
       <div className="mt-12 grid gap-4 sm:grid-cols-3">
         {cards.map((c) => (
-          <a
-            key={c.title}
-            href={c.href}
-            target={c.external ? '_blank' : undefined}
-            rel={c.external ? 'noreferrer' : undefined}
-            className="group rounded-2xl border border-white/10 bg-night-800 p-7 text-center transition hover:-translate-y-1 hover:border-brand/50"
-          >
-            <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand/15 text-brand">
-              <c.icon size={24} />
-            </span>
-            <h2 className="mt-4 text-lg font-bold text-white">{c.title}</h2>
-            <p className="mt-2 text-sm font-medium text-night-100">{c.line1}</p>
-            <p className="text-xs text-night-200">{c.line2}</p>
-            <span className="mt-4 inline-block text-sm font-bold text-brand group-hover:underline">
-              {c.action}
-            </span>
-          </a>
+          <TiltCard key={c.title} className="h-full">
+            <a
+              href={c.href}
+              target={c.external ? '_blank' : undefined}
+              rel={c.external ? 'noreferrer' : undefined}
+              className="group block h-full rounded-2xl border border-white/10 bg-night-800 p-7 text-center transition hover:-translate-y-1 hover:border-brand/50"
+            >
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand/15 text-brand">
+                <c.icon size={24} />
+              </span>
+              <h2 className="mt-4 text-lg font-bold text-white">{c.title}</h2>
+              <p className="mt-2 text-sm font-medium text-night-100">{c.line1}</p>
+              <p className="text-xs text-night-200">{c.line2}</p>
+              <span className="mt-4 inline-block text-sm font-bold text-brand group-hover:underline">
+                {c.action}
+              </span>
+            </a>
+          </TiltCard>
         ))}
       </div>
 

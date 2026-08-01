@@ -1,11 +1,14 @@
+import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, ShieldCheck, Clock, Users, Award, ArrowRight, Quote } from 'lucide-react'
 import { SITE, SERVICES, TRUST_BADGES, TESTIMONIALS, telLink } from '../config'
 import usePageTitle from '../hooks/usePageTitle'
 import LeadForm from '../components/LeadForm'
 import EstimateCalculator from '../components/EstimateCalculator'
-import heroImg from '../assets/hero.jpg'
+import TiltCard from '../components/TiltCard'
 import bookingImg from '../assets/booking-form.png'
+
+const Hero3D = lazy(() => import('../components/Hero3D'))
 
 export default function Home() {
   usePageTitle('Security Guards & Bouncers in Mumbai')
@@ -61,13 +64,9 @@ function Hero() {
         </div>
 
         <div className="relative hidden lg:block">
-          <div className="overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-black/40">
-            <img
-              src={heroImg}
-              alt={`${SITE.shortName} security personnel`}
-              className="aspect-square w-full object-cover"
-            />
-          </div>
+          <Suspense fallback={null}>
+            <Hero3D />
+          </Suspense>
           <div className="absolute -left-6 top-10 rounded-2xl border border-white/10 bg-night-800/90 p-4 shadow-xl backdrop-blur">
             <p className="flex items-center gap-2 text-sm font-bold text-white"><Clock size={16} className="text-brand" /> 24/7 Deployment</p>
           </div>
@@ -114,20 +113,21 @@ function ServicesPreview() {
       </div>
       <div className="mt-12 grid gap-6 sm:grid-cols-2">
         {SERVICES.map((s) => (
-          <Link
-            key={s.id}
-            to="/services"
-            className="group rounded-2xl border border-white/10 bg-night-800 p-7 transition hover:-translate-y-1 hover:border-brand/50 hover:bg-night-700"
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-2xl">
-              {s.icon}
-            </span>
-            <h3 className="mt-5 text-xl font-bold text-white group-hover:text-brand">{s.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-night-100">{s.description}</p>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-brand">
-              Request This Service <ArrowRight size={16} className="transition group-hover:translate-x-1" />
-            </span>
-          </Link>
+          <TiltCard key={s.id}>
+            <Link
+              to="/services"
+              className="group block h-full rounded-2xl border border-white/10 bg-night-800 p-7 transition hover:-translate-y-1 hover:border-brand/50 hover:bg-night-700"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-2xl">
+                {s.icon}
+              </span>
+              <h3 className="mt-5 text-xl font-bold text-white group-hover:text-brand">{s.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-night-100">{s.description}</p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-brand">
+                Request This Service <ArrowRight size={16} className="transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          </TiltCard>
         ))}
       </div>
     </section>
@@ -190,16 +190,18 @@ function Testimonials() {
       <h2 className="text-3xl font-black text-white sm:text-4xl">What Clients Say</h2>
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         {TESTIMONIALS.map((t) => (
-          <figure key={t.name} className="flex flex-col rounded-2xl border border-white/10 bg-night-800 p-7">
-            <Quote size={26} className="text-brand" />
-            <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-night-100">
-              "{t.quote}"
-            </blockquote>
-            <figcaption className="mt-6 border-t border-white/10 pt-4">
-              <p className="font-bold text-white">{t.name}</p>
-              <p className="text-xs uppercase tracking-wider text-brand">{t.role}</p>
-            </figcaption>
-          </figure>
+          <TiltCard key={t.name} className="h-full">
+            <figure className="flex h-full flex-col rounded-2xl border border-white/10 bg-night-800 p-7">
+              <Quote size={26} className="text-brand" />
+              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-night-100">
+                "{t.quote}"
+              </blockquote>
+              <figcaption className="mt-6 border-t border-white/10 pt-4">
+                <p className="font-bold text-white">{t.name}</p>
+                <p className="text-xs uppercase tracking-wider text-brand">{t.role}</p>
+              </figcaption>
+            </figure>
+          </TiltCard>
         ))}
       </div>
     </section>

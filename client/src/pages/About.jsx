@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ShieldCheck, Medal, Award, Users, ArrowRight, CheckCircle2 } from 'lucide-react'
 import { SITE } from '../config'
 import usePageTitle from '../hooks/usePageTitle'
+import TiltCard from '../components/TiltCard'
 import aboutImg from '../assets/about.png'
 
 export default function About() {
@@ -53,11 +54,13 @@ export default function About() {
             { icon: Users, title: '350+ Personnel', text: 'Ready for deployment' },
             { icon: Medal, title: 'Certified', text: 'Fire & first-aid trained' },
           ].map((c) => (
-            <div key={c.title} className="rounded-2xl border border-white/10 bg-night-800 p-6 text-center">
-              <c.icon size={30} className="mx-auto text-brand" />
-              <p className="mt-3 font-bold text-white">{c.title}</p>
-              <p className="mt-1 text-xs text-night-200">{c.text}</p>
-            </div>
+            <TiltCard key={c.title}>
+              <div className="rounded-2xl border border-white/10 bg-night-800 p-6 text-center">
+                <c.icon size={30} className="mx-auto text-brand" />
+                <p className="mt-3 font-bold text-white">{c.title}</p>
+                <p className="mt-1 text-xs text-night-200">{c.text}</p>
+              </div>
+            </TiltCard>
           ))}
         </div>
       </div>
