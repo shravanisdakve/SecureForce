@@ -7,6 +7,7 @@ import LeadForm from '../components/LeadForm'
 import EstimateCalculator from '../components/EstimateCalculator'
 import TiltCard from '../components/TiltCard'
 import bookingImg from '../assets/booking-form.png'
+import heroImg from '../assets/hero.jpg'
 
 const Hero3D = lazy(() => import('../components/Hero3D'))
 
@@ -64,9 +65,18 @@ function Hero() {
         </div>
 
         <div className="relative hidden lg:block">
-          <Suspense fallback={null}>
-            <Hero3D />
-          </Suspense>
+          <div className="overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-black/40">
+            <img
+              src={heroImg}
+              alt={`${SITE.shortName} security personnel on duty`}
+              className="aspect-square w-full object-cover"
+            />
+          </div>
+          <div className="absolute -bottom-8 -left-8 h-44 w-44 xl:h-52 xl:w-52">
+            <Suspense fallback={null}>
+              <Hero3D />
+            </Suspense>
+          </div>
           <div className="absolute -left-6 top-10 rounded-2xl border border-white/10 bg-night-800/90 p-4 shadow-xl backdrop-blur">
             <p className="flex items-center gap-2 text-sm font-bold text-white"><Clock size={16} className="text-brand" /> 24/7 Deployment</p>
           </div>

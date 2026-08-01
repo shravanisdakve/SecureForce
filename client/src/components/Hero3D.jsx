@@ -1,49 +1,57 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial, Sparkles, ContactShadows } from '@react-three/drei'
+import { Float, Sparkles, ContactShadows } from '@react-three/drei'
+import * as THREE from 'three'
 
-function ShieldCore() {
+function shieldShape() {
+  const s = new THREE.Shape()
+  s.moveTo(-0.85, 0.95)
+  s.lineTo(0.85, 0.95)
+  s.quadraticCurveTo(1.05, 0.55, 0.9, 0.1)
+  s.quadraticCurveTo(0.7, -0.65, 0, -1.15)
+  s.quadraticCurveTo(-0.7, -0.65, -0.9, 0.1)
+  s.quadraticCurveTo(-1.05, 0.55, -0.85, 0.95)
+  return s
+}
+
+function ShieldBadge() {
   const group = useRef(null)
 
   useFrame(({ pointer }) => {
     const g = group.current
     if (!g) return
-    g.rotation.y += 0.004
-    g.rotation.x += (pointer.y * 0.3 - g.rotation.x) * 0.05
-    g.rotation.z += (pointer.x * 0.3 - g.rotation.z) * 0.05
+    g.rotation.y += 0.005
+    g.rotation.x += (pointer.y * 0.3 - g.rotation.x) * 0.06
+    g.rotation.z += (pointer.x * 0.3 - g.rotation.z) * 0.06
   })
 
   return (
     <group ref={group}>
       <mesh>
-        <icosahedronGeometry args={[1.15, 1]} />
-        <MeshDistortMaterial color="#facc15" roughness={0.2} metalness={0.85} distort={0.35} speed={1.6} />
-      </mesh>
-      <mesh scale={1.6}>
-        <icosahedronGeometry args={[1.15, 1]} />
-        <meshBasicMaterial color="#facc15" wireframe transparent opacity={0.14} />
+        <extrudeGeometry
+          args={[
+            shieldShape(),
+            { depth: 0.3, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.09, bevelSegments: 6, steps: 1 },
+          ]}
+        />
+        <meshStandardMaterial color="#facc15" metalness={0.9} roughness={0.2} />
       </mesh>
     </group>
   )
 }
 
-export default function Hero3D() {
+export default function Hero3D({ className = '' }) {
   return (
-    <div className="relative h-[380px] w-full sm:h-[440px] xl:h-[500px]">
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 6], fov: 42 }}
-        style={{ background: 'transparent' }}
-        aria-label="Animated 3D security crystal"
-      >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[4, 6, 5]} intensity={2.2} color="#fff7d6" />
-        <pointLight position={[-4, -2, 3]} intensity={1.4} color="#facc15" />
-        <Float speed={1.8} rotationIntensity={0.4} floatIntensity={1.1}>
-          <ShieldCore />
+    <div className={className}>
+      <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 5.2], fov: 45 }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[3, 4, 4]} intensity={2} color="#fff7d6" />
+        <pointLight position={[-3, -2, 3]} intensity={1.2} color="#facc15" />
+        <Float speed={1.6} rotationIntensity={0.5} floatIntensity={0.8}>
+          <ShieldBadge />
         </Float>
-        <Sparkles count={70} scale={7} size={2.2} speed={0.4} opacity={0.5} color="#facc15" />
-        <ContactShadows position={[0, -2.3, 0]} opacity={0.4} scale={9} blur={2.6} far={4.2} color="#000000" />
+        <Sparkles count={40} scale={4} size={1.8} speed={0.35} opacity={0.45} color="#facc15" />
+        <ContactShadows position={[0, -1.7, 0]} opacity={0.45} scale={5} blur={2.5} far={3} color="#000000" />
       </Canvas>
     </div>
   )
