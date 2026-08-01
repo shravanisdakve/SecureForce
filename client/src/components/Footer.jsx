@@ -47,7 +47,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 py-5 text-center text-xs text-night-200">
-        © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+        © {new Date().getFullYear()} {SITE.name}. All rights reserved.{' '}
+        <Link to="/admin" className="ml-2 text-night-400 underline-offset-2 hover:text-brand hover:underline">
+          Admin
+        </Link>
       </div>
     </footer>
   )
