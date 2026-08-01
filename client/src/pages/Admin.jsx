@@ -17,6 +17,7 @@ import {
   MessagesSquare,
 } from 'lucide-react'
 import usePageTitle from '../hooks/usePageTitle'
+import { useSite } from '../siteContext'
 
 const PW_KEY = 'sf_admin_pw'
 
@@ -261,6 +262,7 @@ const emptyClient = {
 }
 
 function ClientsTab() {
+  const { services } = useSite()
   const [clients, setClients] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -338,7 +340,19 @@ function ClientsTab() {
         <Field label="Company" value={value.company} onChange={(v) => setField(setter, 'company', v)} />
         <Field label="Email" value={value.email} type="email" onChange={(v) => setField(setter, 'email', v)} />
         <Field label="Location" value={value.location} onChange={(v) => setField(setter, 'location', v)} />
-        <Field label="Service" value={value.service} onChange={(v) => setField(setter, 'service', v)} />
+        <label className="block">
+          <span className="mb-1 block text-xs font-semibold uppercase tracking-wider text-night-200">Service</span>
+          <select
+            className={inputCls}
+            value={value.service}
+            onChange={(e) => setField(setter, 'service', e.target.value)}
+          >
+            <option value="">— Select service —</option>
+            {services.map((s) => (
+              <option key={s.id} value={s.title}>{s.title}</option>
+            ))}
+          </select>
+        </label>
         <label className="block sm:col-span-2">
           <span className="mb-1 block text-xs font-semibold uppercase tracking-wider text-night-200">Status</span>
           <select
@@ -347,7 +361,7 @@ function ClientsTab() {
             onChange={(e) => setField(setter, 'status', e.target.value)}
           >
             {['active', 'inactive', 'closed'].map((s) => (
-              <option key={s} value={s}>{s}</option>
+              <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
             ))}
           </select>
         </label>
@@ -425,7 +439,7 @@ function ClientsTab() {
                         c.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-night-200'
                       }`}
                     >
-                      {c.status}
+                      {c.status.charAt(0).toUpperCase() + c.status.slice(1)}
                     </span>
                   </div>
                   {(c.phone || c.email) && (
