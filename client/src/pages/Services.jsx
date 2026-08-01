@@ -18,7 +18,7 @@ export default function Services() {
 
       <div className="mt-12 space-y-8">
         {SERVICES.map((s, i) => (
-          <TiltCard key={s.id} max={6}>
+          <TiltCard key={s.id} max={6} glareClassName="rounded-3xl">
             <div className="grid gap-8 rounded-3xl border border-white/10 bg-night-800 p-8 md:grid-cols-[auto_1fr] md:p-10">
             <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/15 text-3xl">
               {s.icon}
