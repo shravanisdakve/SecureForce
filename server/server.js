@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import nodemailer from 'nodemailer'
 import { existsSync } from 'node:fs'
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
@@ -12,6 +13,11 @@ const LEADS_FILE = join(DATA_DIR, 'leads.json')
 const CLIENT_DIST = join(__dirname, '..', 'client', 'dist')
 
 const MONGODB_URI = process.env.MONGODB_URI
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'secureforce123'
+const SMTP_HOST = process.env.SMTP_HOST
+const SMTP_USER = process.env.SMTP_USER
+const SMTP_PASS = process.env.SMTP_PASS
+const LEAD_EMAIL_TO = process.env.LEAD_EMAIL_TO || SMTP_USER
 
 const leadSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -55,6 +61,54 @@ if (MONGODB_URI) {
     .catch((err) => {
       console.error('MongoDB connection failed, using file storage:', err.message)
     })
+}
+
+let transporter = null
+if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+  transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: 465,
+    secure: true,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  })
+}
+
+function requireAdmin(req, res, next) {
+  const pw = req.get('x-admin-password')
+  if (!pw || pw !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'unauthorized' })
+  }
+  next()
+}
+
+async function sendLeadEmail(lead) {
+  if (!transporter || !LEAD_EMAIL_TO) {
+    console.warn('Email notification skipped: SMTP env vars not configured')
+    return
+  }
+  try {
+    await transporter.sendMail({
+      from: `SecureForce Website <${SMTP_USER}>`,
+      to: LEAD_EMAIL_TO,
+      subject: `New service request: ${lead.service}`,
+      text: [
+        'A new request came in from the SecureForce website.',
+        '',
+        `Name: ${lead.name}`,
+        `Phone: ${lead.phone}`,
+        `Service: ${lead.service}`,
+        `Location: ${lead.location}`,
+        lead.date ? `Date: ${lead.date}` : '',
+        lead.message ? `Details: ${lead.message}` : '',
+        '',
+        `WhatsApp the customer: https://wa.me/${String(lead.phone).replace(/\D/g, '')}`,
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    })
+  } catch (err) {
+    console.error('Email notification failed:', err.message)
+  }
 }
 
 async function readFileLeads() {
@@ -120,7 +174,53 @@ app.post('/api/leads', async (req, res) => {
     status: 'new',
   })
 
+  sendLeadEmail(lead)
   res.status(201).json(lead)
+})
+
+app.get('/api/admin/leads', requireAdmin, async (req, res) => {
+  const leads = await getLeads()
+  res.json(leads)
+})
+
+app.patch('/api/admin/leads/:id', requireAdmin, async (req, res) => {
+  const { status } = req.body || {}
+  if (!status || !['new', 'contacted'].includes(status)) {
+    return res.status(400).json({ error: 'status must be new or contacted' })
+  }
+  const { id } = req.params
+  if (usingMongo) {
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ error: 'invalid id' })
+    }
+    const lead = await Lead.findByIdAndUpdate(id, { status }, { new: true }).lean()
+    if (!lead) return res.status(404).json({ error: 'not found' })
+    return res.json(lead)
+  }
+  const leads = await readFileLeads()
+  const idx = leads.findIndex((l) => l.id === id)
+  if (idx === -1) return res.status(404).json({ error: 'not found' })
+  leads[idx].status = status
+  await writeFileLeads(leads)
+  res.json(leads[idx])
+})
+
+app.delete('/api/admin/leads/:id', requireAdmin, async (req, res) => {
+  const { id } = req.params
+  if (usingMongo) {
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ error: 'invalid id' })
+    }
+    const lead = await Lead.findByIdAndDelete(id)
+    if (!lead) return res.status(404).json({ error: 'not found' })
+    return res.json({ ok: true })
+  }
+  const leads = await readFileLeads()
+  const idx = leads.findIndex((l) => l.id === id)
+  if (idx === -1) return res.status(404).json({ error: 'not found' })
+  leads.splice(idx, 1)
+  await writeFileLeads(leads)
+  res.json({ ok: true })
 })
 
 app.listen(PORT, () => {
